@@ -1,2 +1,3 @@
-# hyperion
-branches consist of html only - testing &amp; proof of concept with notes to help getting started
+# Charlie Game - built 2017
+    - First game built for charlie using Phaser - was a happy birthday game
+
