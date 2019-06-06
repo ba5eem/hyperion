@@ -1,0 +1,100 @@
+(function () {
+
+  console.log(data.length)
+
+    var genPanes = function (count) {
+
+        var geometry = new THREE.Geometry(),
+
+        offset,
+        pane,
+        x = 0,
+        y = 0,
+        z = 0;
+
+        count = count || 6;
+
+        // generate vertices
+        pane = 0;
+        // while (pane < count) {
+
+        //     var i = 0,
+        //     per = pane / count,
+        //     len = 4;
+        //     while (i < len) {
+
+
+
+
+
+        //         data.map(e => {
+        //           geometry.vertices.push(
+        //             new THREE.Vector3( e.x, e.y, e.z )
+        //           );
+        //         })
+
+        //         i += 1;
+        //     }
+
+        //     pane += 1;
+        // }
+
+        data.map(e => {
+                  geometry.vertices.push(
+                    new THREE.Vector3( e.x / 0.1, e.y / 0.1, e.z / 0.1 )
+                  );
+                })
+
+        // generate faces
+        pane = 0;
+        while (pane < count) {
+
+            offset = pane * 4;
+
+            geometry.faces.push(
+                new THREE.Face3(0 + offset, 1 + offset, 2 + offset),
+                new THREE.Face3(3 + offset, 2 + offset, 1 + offset)
+            );
+
+
+            pane += 1;
+        }
+
+        // compute Normals
+        geometry.computeVertexNormals();
+
+        // normalize the geometry
+        geometry.normalize();
+
+        console.log(geometry.vertices[0].x);
+
+        return geometry;
+
+    };
+
+    // SCENE
+    var scene = new THREE.Scene();
+
+    // CAMERA
+    var camera = new THREE.PerspectiveCamera(50, 4 / 3, .5, 1000);
+    camera.position.set(1, 1, 1);
+    camera.lookAt(0, 0, 0);
+
+    // MESH with Geometry, and Basic Material
+    scene.add(new THREE.Mesh(
+
+            genPanes(20),
+
+            // Material
+            new THREE.MeshNormalMaterial({
+                side: THREE.DoubleSide
+            })));
+
+    // RENDER
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(620, 840);
+    document.getElementById('demo').appendChild(renderer.domElement);
+    renderer.render(scene, camera);
+
+}
+    ());
